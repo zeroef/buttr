@@ -1,0 +1,70 @@
+﻿@{ ViewBag.Title = "Home Page";
+}
+
+@model Buttr.Web.ViewModels.HomeViewModel
+<div class="jumbotron">
+    <h1>Buttr<span style="font-size:xx-small;"><a href="http://www.cornify.com" onclick="cornify_add();return false;">:)</a></span></h1>
+    <p class="lead">Do zip codes have you churned up inside? Let Buttr help smooth things out.</p>
+</div>
+
+<div class="row">
+    @using (Html.BeginForm())
+    {
+        <div class="form-group">
+            @Html.LabelFor(m => m.CountySelectList)
+            @Html.ListBoxFor(m => m.SelectedCounties, Model.CountySelectList, new { @class = "form-control chosen-select", data_placeholder = "Search For Counties...", style = "width:100%" })
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.ExcludedZips)
+            @Html.TextAreaFor(m => m.ExcludedZips)
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.IncludeZips)
+            @Html.TextAreaFor(m => m.IncludeZips)
+        </div>
+        
+        <button type="submit" class="btn btn-default">Submit</button>
+    }
+</div>
+
+<div style="height:40px"></div>
+<div class="row">
+    <h2>Results</h2>
+    <div class="form-group">
+        @Html.TextAreaFor(m => m.GeneratedZips, new {@style = "width:100%;height:600px;" })
+        <button id="copy-button" class="btn btn-danger" data-clipboard-target="GeneratedZips" title="Click to copy me.">Copy to Clipboard</button>
+        <script src="/Content/zeroclipboard/ZeroClipboard.js"></script>        
+    </div>
+</div>
+<div style="height:40px"></div>
+<div style="height:40px"></div>
+<div class="row pull-right">
+    @Html.ActionLink("About Buttr", "About")    
+</div>
+
+<script type="text/javascript" src="http://www.cornify.com/js/cornify.js"></script>
+
+<script type="text/javascript">
+    // A $( document ).ready() block.
+    $(document).ready(function () { 
+        console.log("ready!");
+        $('.chosen-select').chosen();    
+        $('#ExcludedZips').tokenfield(); 
+        $('#IncludeZips').tokenfield();
+    });
+
+    // main.js
+    var client = new ZeroClipboard(document.getElementById("copy-button"));
+
+    client.on("ready", function (readyEvent) {
+        // alert( "ZeroClipboard SWF is ready!" );
+
+        client.on("aftercopy", function (event) {
+            // `this` === `client`
+            // `event.target` === the element that was clicked
+            //event.target.style.display = "none";
+            alert("Copied text to clipboard: " + event.data["text/plain"]);
+        });
+    });
+</script>
+

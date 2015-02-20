@@ -1,0 +1,23 @@
+﻿CREATE TABLE Fips
+(
+	FipsId INT IDENTITY NOT NULL,
+	State VARCHAR(2) NOT NULL,
+	StateFips VARCHAR(2) NOT NULL,
+	CountyFips VARCHAR(3) NOT NULL,
+	County VARCHAR(256) NOT NULL,
+	FipsClassCode INT NOT NULL
+	PRIMARY KEY (FipsId)
+)
+
+CREATE TABLE ZipCodes
+(
+	ZipCodeId VARCHAR(10) NOT NULL,
+	FipsCode VARCHAR(5) NOT NULL,
+	City VARCHAR(50) NOT NULL,
+	PRIMARY KEY (ZipCodeId, FipsCode)
+)
+
+CREATE TABLE Fips_Zips
+(
+
+)
